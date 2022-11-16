@@ -2,18 +2,21 @@ class MedianFinder {
 
     PriorityQueue<Integer> heapMin = new PriorityQueue<>(Comparator.comparingInt(a -> a));
     PriorityQueue<Integer> heapMax = new PriorityQueue<>(Comparator.comparingInt(a -> -a));
-
+    boolean even = true;
 
     public void addNum(int num) {
-        heapMax.offer(num);
-        heapMin.offer(heapMax.poll());
-        if (heapMin.size() > heapMax.size())
-            heapMax.offer(heapMin.poll());
-
+        if (even) {
+            heapMin.add(num);
+            heapMax.add(heapMin.poll());
+        } else {
+            heapMax.add(num);
+            heapMin.add(heapMax.poll());
+        }
+        even = !even;
     }
 
     public double findMedian() {
-        if (heapMax.size() == heapMin.size()) return (double) (heapMin.peek() + heapMax.peek()) / 2.0;
+        if (even) return (double) (heapMin.peek() + heapMax.peek()) / 2.0;
         else return heapMax.peek();
     }
 }
