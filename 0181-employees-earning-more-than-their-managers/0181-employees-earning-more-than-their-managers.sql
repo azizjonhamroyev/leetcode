@@ -1,3 +1,3 @@
-select name as Employee
-from employee e
-where e.managerId is not null and e.salary > (select salary from employee where employee.id = e.managerId)
+select E1.Name as Employee 
+from Employee as E1, Employee as E2 
+where E1.ManagerId = E2.Id and E1.Salary > E2.Salary
